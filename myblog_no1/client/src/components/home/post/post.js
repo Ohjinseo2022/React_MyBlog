@@ -2,11 +2,14 @@ import { useCallback, useState } from "react";
 import styled from "styled-components";
 import CommentForm from "./commentForm";
 import Comment from "./comment";
+import { useInput } from "../../../hooks/useInput";
 
 const Post = ({ post }) => {
   const [editPost, setEditPost] = useState(false);
   const [commentBox, setCommentBox] = useState(false);
-
+  const [howText, onChangeHowText, setHowtext] =
+    useInput("리엑트는 재밌습니다");
+  const [comment, onChangecomment, setcomment] = useInput("");
   const onEditPostHandler = useCallback(() => {
     setEditPost((prev) => !prev);
   }, [editPost]);
@@ -14,6 +17,15 @@ const Post = ({ post }) => {
   const onCommentBoxHandler = useCallback(() => {
     setCommentBox((prev) => !prev);
   }, [commentBox]);
+
+  const onCommentHandler = useCallback(
+    (e) => {
+      console.log(e.target.value);
+      setHowtext(e.target.value);
+      setEditPost((prev) => !prev);
+    },
+    [editPost, setHowtext]
+  );
 
   return (
     <StyledPost>
@@ -35,11 +47,22 @@ const Post = ({ post }) => {
       <>
         {editPost ? (
           <>
-            <textarea cols="80" row="5" />
-            <button className="editBtn updateBtn">수정하기</button>
+            <textarea
+              cols="80"
+              row="5"
+              value={comment}
+              onChange={onChangecomment}
+            />
+            <button
+              className="editBtn updateBtn"
+              value={comment}
+              onClick={onCommentHandler}
+            >
+              수정하기
+            </button>
           </>
         ) : (
-          <div className="content">리엑트는 재밌습니다</div>
+          <div className="content">{howText}</div>
         )}
       </>
       <div className="content"></div>
