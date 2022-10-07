@@ -5,9 +5,15 @@ import Comment from "./comment";
 
 const Post = ({ post }) => {
   const [editPost, setEditPost] = useState(false);
+  const [commentBox, setCommentBox] = useState(false);
+
   const onEditPostHandler = useCallback(() => {
     setEditPost((prev) => !prev);
   }, [editPost]);
+
+  const onCommentBoxHandler = useCallback(() => {
+    setCommentBox((prev) => !prev);
+  }, [commentBox]);
 
   return (
     <StyledPost>
@@ -38,17 +44,16 @@ const Post = ({ post }) => {
       </>
       <div className="content"></div>
 
-      <div className="comment">
-        <div className="total">댓글 0개</div>
+      <div className="comment" onClick={onCommentBoxHandler}>
+        <div className="total">댓글 1개</div>
         <div className="commentBtn">댓글 달기</div>
       </div>
-      {/* {commentBox && (
+      {commentBox && (
         <>
           <CommentForm />
-          {post.Comments.length > 0 &&
-            post.Comments.map((v) => <Comment key={v.id} comment={v} />)}
+          <Comment />
         </>
-      )} */}
+      )}
     </StyledPost>
   );
 };

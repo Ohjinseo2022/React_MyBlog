@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import { useInput } from "../../hooks/useInput";
+import { useCallback } from "react";
 
 /* 
 경로 확인
@@ -8,7 +10,20 @@ npm i styeld-components react-router-dom
 
 const LoginMain = () => {
   //로그인이 되었다면 /Login에 접근할 수 없음
+  const [email, onChangeEmail, setemail] = useInput("");
+  const [password, onChangePassword, setPassword] = useInput("");
 
+  const onLoginHandler = useCallback(
+    (e) => {
+      e.preventDefault(); //from 의기능믈 막음
+      //e 객체의 기본 기능을 막는 기능(제출)
+      console.log(email);
+      console.log(password);
+      email && password && console.log("로그인완료");
+      //로그인로직
+    },
+    [email, password]
+  );
   return (
     <LoginFrom>
       <h1>로그인</h1>
@@ -18,6 +33,8 @@ const LoginMain = () => {
           placeholder="이메일을 입력해주세요"
           autoComplete="off"
           required
+          value={email}
+          onChange={onChangeEmail}
         />
       </div>
       <div>
@@ -26,9 +43,11 @@ const LoginMain = () => {
           placeholder="비밀번호를 입력해주세요"
           autoComplete="off"
           required
+          value={password}
+          onChange={onChangePassword}
         />
       </div>
-      <button>로그인</button>
+      <button onClick={onLoginHandler}>로그인</button>
       <Link to="/sign">아직 회원이 아니신가요?</Link>
     </LoginFrom>
   );

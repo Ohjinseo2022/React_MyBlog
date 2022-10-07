@@ -4,9 +4,9 @@ const Comment = (Comment) => {
   return (
     <StyledComment>
       <div className="inner">
-        <div className="username">{Comment.User.name}</div>
-        <div className="text">{Comment.content}</div>
-        <div className="date">2020</div>
+        <div className="username">오진서</div>
+        <div className="text">안녕</div>
+        <div className="date">2022-10-07</div>
         <div className="replyBtn">💬</div>
         <div className="removeBtn">❌</div>
       </div>
