@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useInput } from "../../hooks/useInput";
 import { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { LOGIN_IN_REQUEST } from "../../reducer/userReducer";
 
 /* 
 경로 확인
@@ -12,13 +14,18 @@ const LoginMain = () => {
   //로그인이 되었다면 /Login에 접근할 수 없음
   const [email, onChangeEmail, setemail] = useInput("");
   const [password, onChangePassword, setPassword] = useInput("");
-
+  const dispacth = useDispatch();
   const onLoginHandler = useCallback(
     (e) => {
       e.preventDefault(); //from 의기능믈 막음
       //e 객체의 기본 기능을 막는 기능(제출)
-      console.log(email);
-      console.log(password);
+      dispacth({
+        type: LOGIN_IN_REQUEST,
+        data: {
+          email: email,
+          password: password,
+        },
+      });
       email && password && console.log("로그인완료");
       //로그인로직
     },
