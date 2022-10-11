@@ -1,14 +1,25 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { LOAD_ALLPOSTS_REQUEST } from "../../reducer/postReducer";
 
 import Post from "./post/post";
 import PostForm from "./post/postForm";
 
 const HomeMain = () => {
+  const dispatch = useDispatch();
+  const { allPost } = useSelector((state) => state.postReducer);
+  useEffect(() => {
+    dispatch({
+      type: LOAD_ALLPOSTS_REQUEST,
+    });
+  }, []);
+  console.log("게시글 조회", allPost);
   return (
     <StyledWrap>
       <PostForm />
-      <Post />
-      {/* {allPost.length > 0 && allPost.map((v) => <Post key={v.id} post={v} />)} */}
+      <Post allPost={allPost} />
+      {allPost.length > 0 && allPost.map((v) => <Post key={v.id} post={v} />)}
     </StyledWrap>
   );
 };

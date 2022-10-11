@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useInput } from "../../hooks/useInput";
-import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { LOGIN_IN_REQUEST } from "../../reducer/userReducer";
 
 /* 
@@ -14,7 +14,14 @@ const LoginMain = () => {
   //로그인이 되었다면 /Login에 접근할 수 없음
   const [email, onChangeEmail, setemail] = useInput("");
   const [password, onChangePassword, setPassword] = useInput("");
+  //react-router-dom 의 페이지 이동 함수
+  const navigate = useNavigate();
+
   const dispacth = useDispatch();
+  //selector
+  // const { me } = useSelector((state) => state.user);
+  const { me } = useSelector((state) => state.userReducer);
+
   const onLoginHandler = useCallback(
     (e) => {
       e.preventDefault(); //from 의기능믈 막음
@@ -26,11 +33,21 @@ const LoginMain = () => {
           password: password,
         },
       });
-      email && password && console.log("로그인완료");
+      email && password && console.log("유저 정보", me.nickname);
       //로그인로직
     },
     [email, password]
   );
+
+  //로그인이 되었다면 /login에 접근할 수 없음
+  useEffect(() => {
+    console.log(me);
+    if (!me) {
+      return navigate("/");
+    }
+    navigate("/");
+  }, [me]);
+
   return (
     <LoginFrom>
       <h1>로그인</h1>

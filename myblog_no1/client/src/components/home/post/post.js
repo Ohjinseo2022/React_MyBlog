@@ -1,10 +1,12 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import CommentForm from "./commentForm";
 import Comment from "./comment";
 import { useInput } from "../../../hooks/useInput";
+import { useDispatch, useSelector } from "react-redux";
+import { LOAD_ALLPOSTS_REQUEST } from "../../../reducer/postReducer";
 
-const Post = ({ post }) => {
+const Post = ({ allPost }) => {
   const [editPost, setEditPost] = useState(false);
   const [commentBox, setCommentBox] = useState(false);
   const [howText, onChangeHowText, setHowtext] =
@@ -33,7 +35,7 @@ const Post = ({ post }) => {
         <div className="inner">
           <StyledAvatar src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/profle-512.png" />
           <div className="name-date">
-            <div className="name">오진서</div>
+            <div className="name">{allPost.User.nickname}</div>
             <div className="date">2022.10.06</div>
           </div>
         </div>
