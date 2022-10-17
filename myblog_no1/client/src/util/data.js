@@ -7,6 +7,8 @@ export const dummyUser = (data) => ({
   Posts: [{ id: 1 }],
 });
 
+// faker.locale = "ko";
+
 /*jwt토큰 로그인방식 - > 모든회사에서 사용함 !!! 카카오가 뚫렸었음 
   
 */

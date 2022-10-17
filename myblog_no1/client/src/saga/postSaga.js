@@ -1,4 +1,4 @@
-import { all, delay, fork, put, takeLatest } from "redux-saga/effects";
+import { all, call, delay, fork, put, takeLatest } from "redux-saga/effects";
 import {
   LOAD_ALLPOSTS_FAILURE,
   LOAD_ALLPOSTS_REQUEST,
@@ -6,18 +6,26 @@ import {
 } from "../reducer/postReducer";
 import { dummyPost, createDummyPost } from "../util/data";
 
+import axios from "axios";
+
+function loginApi() {
+  return axios.get("http://localhost:3030/post");
+}
+
 function* allPost(action) {
   try {
-    yield delay(500); //백엔드 통신하는 척
+    const result = yield call(loginApi);
+
     yield put({
       type: LOAD_ALLPOSTS_SUCCESS,
-      data: dummyPost(action.data),
+      data: result.data,
     });
   } catch (err) {
     yield put({
       type: LOAD_ALLPOSTS_FAILURE,
       error: err.response.data,
     });
+    throw new Error(err);
   }
 }
 

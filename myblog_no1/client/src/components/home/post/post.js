@@ -3,15 +3,13 @@ import styled from "styled-components";
 import CommentForm from "./commentForm";
 import Comment from "./comment";
 import { useInput } from "../../../hooks/useInput";
-import { useDispatch, useSelector } from "react-redux";
-import { LOAD_ALLPOSTS_REQUEST } from "../../../reducer/postReducer";
 
-const Post = ({ allPost }) => {
+const Post = ({ post }) => {
   const [editPost, setEditPost] = useState(false);
   const [commentBox, setCommentBox] = useState(false);
   const [howText, onChangeHowText, setHowtext] =
     useInput("리엑트는 재밌습니다");
-  const [comment, onChangecomment, setcomment] = useInput("");
+  const [comment, onChangecomment, setComment] = useInput("");
   const onEditPostHandler = useCallback(() => {
     setEditPost((prev) => !prev);
   }, [editPost]);
@@ -28,14 +26,14 @@ const Post = ({ allPost }) => {
     },
     [editPost, setHowtext]
   );
-
+  console.log(post);
   return (
     <StyledPost>
       <div className="info">
         <div className="inner">
           <StyledAvatar src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/profle-512.png" />
           <div className="name-date">
-            <div className="name">{allPost.User.nickname}</div>
+            <div className="name">{post.User.nickname}</div>
             <div className="date">2022.10.06</div>
           </div>
         </div>
