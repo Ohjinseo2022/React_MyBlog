@@ -2,7 +2,7 @@ import shortId from "shortid";
 import { faker } from "@faker-js/faker";
 export const dummyUser = (data) => ({
   ...data,
-  nickname: "진서님",
+  nickname: "오진서",
   id: 1,
   Posts: [{ id: 1 }],
 });
