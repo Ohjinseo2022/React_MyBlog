@@ -1,0 +1,313 @@
+--------------------------------------------------------------------------------------
+
+export const HeaderWrapper = styled.header`
+    width: 100%;
+    height: 4rem;
+    padding: 1rem;
+`;
+
+export const HeaderLogo = styled.div`
+    float: left;
+    margin-left: 3rem;
+    font-weight: bold;
+    color: ${(props) => props.theme.mainColor};
+    font-size: 1.5rem;
+    cursor: pointer;
+`;
+
+export const HeaderList = styled.ul`
+    display: flex;
+    align-content: auto;
+    flex-direction: auto;
+    flex-wrap: auto;
+    float: right;
+    margin-right: 3rem;
+    color: ${(props) => props.theme.mainColor};
+    position: relative;
+    align-items: center;
+    height: 2.5rem;
+    font-size: 0.825rem;
+
+    & > li {
+        cursor: pointer;
+
+        ::after {
+            content: "|";
+            clear: both;
+            margin: 0 0.5rem;
+        }
+
+        :last-child::after {
+            content: "";
+        }
+    }
+`;
+
+
+--------------------------------------------------------------------------------------
+
+import styled from "styled-components";
+
+export const FooterWrapper = styled.footer`
+    width: 100%;
+    background-color: rgba(238, 238, 238, 0.5);
+`;
+
+export const FooterTamplate = styled.div`
+    width: 1080px;
+    margin: 1rem auto;
+    min-width: 360px;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: auto;
+    flex-wrap: auto;
+`;
+
+export const Footertxt = styled.div`
+    width: 70%;
+    color: #555;
+
+    & p {
+        width: 70%;
+        font-weight: auto;
+        font-size: 0.825rem;
+        color: auto;
+        margin-top: 5px;
+    }
+`;
+
+export const FooterRight = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: auto;
+    flex-direction: auto;
+    flex-wrap: auto;
+
+    & > ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: auto;
+        flex-direction: auto;
+        flex-wrap: auto;
+        padding: 0 2rem;
+        background-color: var(--myblog--main--color);
+        border-radius: 0.5rem;
+    }
+
+    & > ul > li {
+        padding: 0.25rem 0.5rem;
+        font-weight: 300;
+        font-size: 1.25rem;
+        color: #ffffff;
+
+        & > span {
+            font-weight: 500;
+        }
+
+        & > i {
+            padding-top: 0.5rem;
+            font-weight: auto;
+            font-size: 1.5rem;
+            color: auto;
+        }
+
+        :first-child {
+            padding-right: 2rem;
+        }
+
+        :hover {
+            color: #555;
+        }
+    }
+`;
+
+--------------------------------------------------------------------------------------
+import styled from "styled-components";
+
+export const MainBannerTamplate = styled.section`
+    background-color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.subColor};
+    width: 100%;
+    height: 20rem;
+    display: flex;
+    align-content: auto;
+    flex-direction: auto;
+    flex-wrap: auto;
+    justify-content: center;
+    align-items: center;
+
+    & > span {
+        font-size: 3rem;
+    }
+`;
+--------------------------------------------------------------------------------------
+import styled from "styled-components";
+
+export const PostList = styled.section`
+    width: 1080px;
+    margin: 0 auto;
+    padding: 2rem;
+
+    & .post_box {
+        padding: 2rem;
+        width: 1080px;
+        height: 1080px;
+        overflow-y: auto;
+        margin: 0 auto;
+
+        ::-webkit-scrollbar {
+            width: 0.5rem;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            height: 30%;
+            background-color: ${(props) => props.theme.mainColor};
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(33, 122, 244, 0.1);
+        }
+    }
+`;
+--------------------------------------------------------------------------------------
+import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import { useCallback, useRef, useState } from "react";
+
+const SignMain = () => {
+    const userEmail = useRef("");
+    const userPw = useRef("");
+    const userName = useRef("");
+    const userPwConfirm = useRef("");
+    const [resultPw, setResultPw] = useState(false);
+
+    const onRegistHandler = useCallback(() => {
+        console.log(userEmail.current.value);
+        console.log(userPw.current.value);
+        console.log(userName.current.value);
+
+        if (userPw.current.value !== userPwConfirm.current.value) {
+            setResultPw(true);
+            alert("비밀번호가 일치하지 않습니다");
+            return;
+        } else {
+            console.log("회원가입 성공");
+        }
+    }, []);
+
+    return (
+        <>
+            <SignFrom>
+                <h1>회원가입</h1>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="이메일을 입력해주세요"
+                        autoComplete="off"
+                        ref={userEmail}
+                    />
+                </div>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="이름을 입력해주세요"
+                        autoComplete="off"
+                        ref={userName}
+                    />
+                </div>
+                <div>
+                    <input
+                        type="password"
+                        placeholder="비밀번호를 입력해주세요"
+                        autoComplete="off"
+                        ref={userPw}
+                    />
+                </div>
+                <div>
+                    <input
+                        type="password"
+                        placeholder="비밀번호를 한번 더 입력해주세요"
+                        autoComplete="off"
+                        ref={userPwConfirm}
+                    />
+                </div>
+                {resultPw && (
+                    <CheckMessage>비밀번호가 일치하지 않습니다</CheckMessage>
+                )}
+                <button onClick={onRegistHandler}>가입하기</button>
+                <Link to="/">돌아가기</Link>
+            </SignFrom>
+        </>
+    );
+};
+export default SignMain;
+
+const SignFrom = styled.div`
+    box-sizing: border-box;
+    max-width: 50rem;
+    max-height: 18.75rem;
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+    text-align: center;
+
+    & h1 {
+        color: #4f5681;
+    }
+
+    & input {
+        box-sizing: border-box;
+        width: 50%;
+        margin: 0.1rem 0;
+        padding: 0.35rem;
+        border: 1px solid #ddd;
+        font-size: 0.875rem;
+        color: #666;
+    }
+
+    & input::placeholder {
+        font-size: 0.875rem;
+        color: #ccc;
+    }
+
+    & input:focus {
+        outline: none;
+        border: 1px solid #7784cc;
+        box-shadow: 0 0 0 0.1rem rgb(59 65 99 / 25%);
+    }
+
+    & button {
+        box-sizing: border-box;
+        width: 50%;
+        margin: 0.2rem;
+        padding: 0.3rem 0;
+        border: none;
+        font-size: 0.875rem;
+        color: #fff;
+        background: #4f5681;
+        cursor: pointer;
+    }
+
+    & button:hover {
+        background: #3b4163;
+    }
+
+    & a {
+        display: block;
+        font-size: 0.875rem;
+        color: #666;
+    }
+`;
+
+const CheckMessage = styled.p`
+    width: 50%;
+    margin: 0 auto;
+    font-size: 0.875rem;
+    color: red;
+    text-align: left;
+`;
+--------------------------------------------------------------------------------------
+
